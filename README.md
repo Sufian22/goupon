@@ -47,6 +47,15 @@ go test ./...
 
 __NOTE: The tests will be executed against the postgres database specified on the configuration file__
 
+### Optional: PostgreSQL Container
+
+Execute the following commands in order to have a PostgreSQL server inside a Docker container:
+
+```bash
+cd db/postgres
+docker build -t postgres -f Dockerfile .
+docker run -d -p 5432:5432 -e POSTGRES_PASSWORD=demodemo postgres
+```
 
 ## API Specification
 

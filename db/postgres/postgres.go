@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
-	"log"
 	"time"
 
 	"github.com/lib/pq"
@@ -150,8 +149,6 @@ func (db *DB) ListCupons(queryValues *models.ListCouponsQueryValues) ([]*models.
 		ORDER BY %s %s
 		LIMIT %s`, queryValues.OrderBy, queryValues.Order, queryValues.Quantity,
 	)
-
-	log.Printf(query)
 
 	rows, err := tx.Query(query, filter)
 	if err != nil {

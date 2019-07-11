@@ -49,17 +49,17 @@ var CreateCouponHandler = func(w http.ResponseWriter, r *http.Request) {
 
 	if err := createCuponRequest.validate(); err != nil {
 		log.Print(err)
-		utils.WriteResponse(w, http.StatusInternalServerError, err.Error(), nil)
+		utils.WriteResponse(w, http.StatusBadRequest, err.Error(), nil)
 		return
 	}
 
-	coupon := models.Coupon{
+	coupon := &models.Coupon{
 		Name:  *createCuponRequest.Name,
 		Brand: *createCuponRequest.Brand,
 		Value: *createCuponRequest.Value,
 	}
 
-	if err := DB.CreateCupon(&coupon); err != nil {
+	if err := DB.CreateCupon(coupon); err != nil {
 		log.Print(err)
 		utils.WriteResponse(w, http.StatusInternalServerError, "Something failed when storing the coupon", nil)
 		return

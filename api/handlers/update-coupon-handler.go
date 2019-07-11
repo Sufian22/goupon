@@ -48,20 +48,20 @@ var UpdateCouponHandler = func(w http.ResponseWriter, r *http.Request) {
 	couponID, err := strconv.Atoi(idVar)
 	if err != nil {
 		log.Print(err)
-		utils.WriteResponse(w, http.StatusInternalServerError, "Coupon identifier should be an integer", nil)
+		utils.WriteResponse(w, http.StatusBadRequest, "Coupon identifier should be an integer", nil)
 		return
 	}
 
 	updateCouponRequest := updateCouponRequest{}
 	if err := json.NewDecoder(r.Body).Decode(&updateCouponRequest); err != nil {
 		log.Print(err)
-		utils.WriteResponse(w, http.StatusInternalServerError, "Something failed when decoding the request body", nil)
+		utils.WriteResponse(w, http.StatusBadRequest, "Something failed when decoding the request body", nil)
 		return
 	}
 
 	if err := updateCouponRequest.validate(); err != nil {
 		log.Print(err)
-		utils.WriteResponse(w, http.StatusInternalServerError, err.Error(), nil)
+		utils.WriteResponse(w, http.StatusBadRequest, err.Error(), nil)
 		return
 	}
 
@@ -78,5 +78,5 @@ var UpdateCouponHandler = func(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	utils.WriteResponse(w, http.StatusOK, "Cupon created successfully", updateCouponRequest)
+	utils.WriteResponse(w, http.StatusOK, "Cupon updated successfully", coupon)
 }
